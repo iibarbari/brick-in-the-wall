@@ -29,7 +29,7 @@ var maxLevel = 5;
 var isPaused = false;
 var ball = new Image();
 
-ball.src= 'src/ricardo.jpg';
+ball.src = 'src/ricardo.jpg';
 
 Game.reset = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -49,11 +49,7 @@ Game.createBricks = () => {
 };
 
 Game.drawBall = () => {
-    // context.beginPath();
     context.drawImage(ball, x, y, ballRadius, ballRadius);
-    // context.fillStyle = defaultColor;
-    // context.fill();
-    // context.closePath();
 };
 
 Game.drawPaddle = () => {
@@ -163,12 +159,33 @@ Game.collisionDetection = () => {
 
             if (status === 1) {
                 if (x > brickX && x < brickX + brickWidth && y > brickY && y < brickY + brickHeight) {
+                    var totalBricks = 0;
+
                     dy = -dy;
                     bricks[c][r].status = 0;
                     score += 1;
 
-                    if (score === brickColumnCount * brickRowCount * level) {
-                        // if (score === 2 * level) {
+                    switch (level) {
+                        case 1:
+                            totalBricks = 15;
+                            break;
+                        case 2:
+                            totalBricks = 35;
+                            break;
+                        case 3:
+                            totalBricks = 60;
+                            break;
+                        case 4:
+                            totalBricks = 80;
+                            break;
+                        case 5:
+                            totalBricks = 125;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (score === totalBricks) {
                         if (level === maxLevel) {
                             alert('You win');
                             document.location.reload();
